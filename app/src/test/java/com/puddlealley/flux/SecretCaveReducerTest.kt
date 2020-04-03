@@ -25,6 +25,11 @@ class SecretCaveReducerTest {
     }
 
     @Test
+    fun `When action is ClearLetters, reduceEnteredCode should return an empty string`() {
+        assertEquals("", reduceEnteredCode("AB", SecretCaveEvents.ClearLetters))
+    }
+
+    @Test
     fun `When action isn't of known type, reduceEnteredCode should return the currently entered code`() {
         assertEquals("DEF", reduceEnteredCode("DEF", UnknownEvent()))
     }

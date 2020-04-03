@@ -16,6 +16,7 @@ fun reduceEnteredCode(enteredCode: String, action: Action): String =
     when (action) {
         is SecretCaveEvents.LetteredEntered -> enteredCode + action.letter
         is SecretCaveEvents.CodeEntered -> action.code
+        is SecretCaveEvents.ClearLetters -> ""
         else -> enteredCode
     }
 

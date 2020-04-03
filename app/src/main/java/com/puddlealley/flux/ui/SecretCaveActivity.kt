@@ -42,14 +42,16 @@ class SecretCaveActivity : AppCompatActivity() {
                     .buffer(6)
                     .map { SecretCaveEvents.CodeEntered(it.joinToString(separator = "")) }
 
-//            val buttonClearClicked = buttonClear.clicks().map {
-//               TODO: Implement clear
-//            }.share()
+            val buttonClearClicked = buttonClear.clicks().map {
+                //Not sure this is correct as I need a way to reset the current buffer value
+                SecretCaveEvents.ClearLetters
+            }.share()
 
             listOf(
                 buttonAClicked,
                 buttonBClicked,
                 buttonCClicked,
+                buttonClearClicked,
                 codeEntered
             ).merge()
         }

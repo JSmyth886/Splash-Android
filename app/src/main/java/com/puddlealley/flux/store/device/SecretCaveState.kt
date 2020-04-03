@@ -13,5 +13,6 @@ data class SecretCaveState(
 sealed class SecretCaveEvents : Event {
     data class LetteredEntered(val letter: String) : SecretCaveEvents()
     data class CodeEntered(val code: String) : SecretCaveEvents()
+    object ClearLetters: SecretCaveEvents()
 }
 
