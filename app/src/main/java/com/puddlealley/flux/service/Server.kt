@@ -25,7 +25,7 @@ class Server {
      * Mock call that validates a secret code
      */
     fun validateSecretCode(secretCode: String) : Single<Boolean> =
-        Single.just(secretCode.toLowerCase(Locale.ROOT) == "abbabba").delay(3, TimeUnit.SECONDS)
+        Single.just(secretCode.toLowerCase(Locale.ROOT) == "abcabc").delay(3, TimeUnit.SECONDS)
 
 }
 
