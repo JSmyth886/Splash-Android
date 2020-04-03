@@ -3,6 +3,7 @@ package com.puddlealley.flux.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
@@ -31,18 +32,24 @@ class SecretCaveActivity : AppCompatActivity() {
         appStore.events(this) {
             val buttonAClicked = buttonA.clicks().map { SecretCaveEvents.LetteredEntered("A") }.share()
             val buttonBClicked = buttonB.clicks().map { SecretCaveEvents.LetteredEntered("B") }.share()
+            val buttonCClicked = buttonC.clicks().map { SecretCaveEvents.LetteredEntered("C") }.share()
 
-            // emits CodeEntered after every 7th letter
+            // emits CodeEntered after every 6th letter
             val codeEntered =
-                listOf(buttonAClicked, buttonBClicked)
+                listOf(buttonAClicked, buttonBClicked, buttonCClicked)
                     .merge()
                     .map { it.letter }
-                    .buffer(7)
+                    .buffer(6)
                     .map { SecretCaveEvents.CodeEntered(it.joinToString(separator = "")) }
+
+//            val buttonClearClicked = buttonClear.clicks().map {
+//               TODO: Implement clear
+//            }.share()
 
             listOf(
                 buttonAClicked,
                 buttonBClicked,
+                buttonCClicked,
                 codeEntered
             ).merge()
         }
@@ -56,6 +63,8 @@ class SecretCaveActivity : AppCompatActivity() {
 
             buttonA.isEnabled = !secretCaveState.loading
             buttonB.isEnabled = !secretCaveState.loading
+            buttonC.isEnabled = !secretCaveState.loading
+            buttonClear.isEnabled = !secretCaveState.loading
 
             enteredCode.text = secretCaveState.enteredCode
 
@@ -69,7 +78,7 @@ class SecretCaveActivity : AppCompatActivity() {
         appStore.actions
             .ofType<CodeVerificationResult.Error>()
             .connect(this){
-                 // show a toast when error occurs
+                 Toast.makeText(this, it.error, Toast.LENGTH_LONG).show()
         }
     }
 
